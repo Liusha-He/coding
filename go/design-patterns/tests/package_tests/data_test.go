@@ -1,14 +1,14 @@
-package tests
+package package_tests
 
 import (
-	"design-patterns/src/data"
+	"design-patterns/src/packages"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestReadCSV(t *testing.T) {
-	df := data.ReadCSVFile("./data/cpi_from_1980.csv")
+	df := packages.ReadCSVFile("./data/cpi_from_1980.csv")
 	assert.Equal(t, df.Names()[0], "DATE")
 	l, w := df.Dims()
 	assert.Equal(t, l, 518)

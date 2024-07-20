@@ -1,4 +1,4 @@
-package basics
+package syntax_sugar
 
 type Sized interface {
 	GetWidth() int

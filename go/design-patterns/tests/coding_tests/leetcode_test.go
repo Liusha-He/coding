@@ -1,27 +1,27 @@
-package tests
+package coding_tests
 
 import (
-	"design-patterns/src/leetcode"
+	"design-patterns/src/coding"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFindArraysMedium(t *testing.T) {
-	medium := leetcode.FindMedianSortedArrays(
+	medium := coding.FindMedianSortedArrays(
 		[]int{1, 3},
 		[]int{2},
 	)
 
 	assert.Equal(t, medium, 2.000)
 
-	medium = leetcode.FindMedianSortedArrays(
+	medium = coding.FindMedianSortedArrays(
 		[]int{1, 2},
 		[]int{3, 4},
 	)
 	assert.Equal(t, medium, 2.50)
 
-	medium = leetcode.FindMediumSortedArraysFaster(
+	medium = coding.FindMediumSortedArraysFaster(
 		[]int{1, 3},
 		[]int{2, 4, 5},
 	)

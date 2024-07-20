@@ -1,4 +1,4 @@
-package basics
+package syntax_sugar
 
 // interface segregation principle
 // - you should never put too much into a single interface
