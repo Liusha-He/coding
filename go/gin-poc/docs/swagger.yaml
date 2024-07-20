@@ -1,0 +1,229 @@
+definitions:
+  api.createAccountRequest:
+    properties:
+      currency:
+        enum:
+        - USD
+        - EUR
+        - GBP
+        - CNY
+        type: string
+      owner:
+        type: string
+    required:
+    - currency
+    - owner
+    type: object
+  api.createUserRequest:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    - username
+    type: object
+  api.loginRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  api.loginResponse:
+    properties:
+      access_token:
+        type: string
+      user:
+        $ref: '#/definitions/api.userResponse'
+    type: object
+  api.transferRequest:
+    properties:
+      amount:
+        minimum: 1
+        type: number
+      currency:
+        type: string
+      from_account_id:
+        minimum: 1
+        type: integer
+      to_account_id:
+        minimum: 1
+        type: integer
+    required:
+    - amount
+    - currency
+    - from_account_id
+    - to_account_id
+    type: object
+  api.userResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      password_changed_at:
+        type: string
+      username:
+        type: string
+    type: object
+  dao.Account:
+    properties:
+      balance:
+        type: number
+      created_at:
+        type: string
+      currency:
+        type: string
+      id:
+        type: integer
+      owner:
+        type: string
+    type: object
+  dao.Transfer:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      from_account_id:
+        type: integer
+      id:
+        type: integer
+      to_account_id:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: A Golang and gin API template
+  title: simple bank API
+  version: "1.0"
+paths:
+  /api/v1/services/accounts:
+    get:
+      description: Responds with the list of accounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dao.Account'
+            type: array
+      summary: Get account list
+      tags:
+      - services
+    post:
+      description: Takes an account json and store in DB, Returned saved json.
+      parameters:
+      - description: account json
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/api.createAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dao.Account'
+      summary: create account
+      tags:
+      - services
+  /api/v1/services/accounts/{id}:
+    get:
+      description: Takes an account id with path, Returned account info json.
+      parameters:
+      - description: search by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dao.Account'
+      summary: get account by id
+      tags:
+      - services
+  /api/v1/services/transfers:
+    post:
+      description: Takes an transfer json and store in DB, Returned saved json.
+      parameters:
+      - description: transfer json
+        in: body
+        name: transfer
+        required: true
+        schema:
+          $ref: '#/definitions/api.transferRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dao.Transfer'
+      summary: create transfer
+      tags:
+      - services
+  /api/v1/users:
+    post:
+      description: Takes an user json and store in DB, Returned saved json.
+      parameters:
+      - description: user json
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/api.createUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.userResponse'
+      summary: create user
+      tags:
+      - users
+  /api/v1/users/login:
+    post:
+      description: Takes an login user json and store in DB, Returned saved json.
+      parameters:
+      - description: login json
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/api.loginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.loginResponse'
+      summary: login
+      tags:
+      - users
+swagger: "2.0"
