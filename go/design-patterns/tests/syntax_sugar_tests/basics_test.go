@@ -1,38 +1,38 @@
-package tests
+package syntax_sugar_tests
 
 import (
 	"fmt"
 	"os"
 	"testing"
 
-	"design-patterns/src/basics"
+	"design-patterns/src/syntax_sugar"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestUskovSubstitution(t *testing.T) {
-	rc := &basics.Rectangle{Width: 2, Height: 3}
-	ex, ac := basics.UsedSized(rc)
+	rc := &syntax_sugar.Rectangle{Width: 2, Height: 3}
+	ex, ac := syntax_sugar.UsedSized(rc)
 
 	assert.Equal(t, ex, ac, fmt.Sprintf("The area should be %d.", ac))
 
-	sq := basics.Square{Size: 5}.Rectangle()
-	ex, ac = basics.UsedSized(&sq)
+	sq := syntax_sugar.Square{Size: 5}.Rectangle()
+	ex, ac = syntax_sugar.UsedSized(&sq)
 
 	assert.Equal(t, ex, ac, fmt.Sprintf("The area should be %d.", ac))
 }
 
 func TestDependencyInversion(t *testing.T) {
-	parent := basics.Person{"John"}
-	child1 := basics.Person{"Chris"}
-	child2 := basics.Person{"Finlay"}
+	parent := syntax_sugar.Person{"John"}
+	child1 := syntax_sugar.Person{"Chris"}
+	child2 := syntax_sugar.Person{"Finlay"}
 
-	relations := basics.Relationships{}
+	relations := syntax_sugar.Relationships{}
 
 	relations.AddChildAndParent(&parent, &child1)
 	relations.AddChildAndParent(&parent, &child2)
 
-	r := basics.Research{&relations}
+	r := syntax_sugar.Research{&relations}
 
 	foundNames := r.Investigate("John")
 	assert.Equal(t, foundNames, "Chris,Finlay", "found names wrong.")
@@ -40,30 +40,30 @@ func TestDependencyInversion(t *testing.T) {
 
 func TestOpenClosed(t *testing.T) {
 	// old way
-	apple := basics.Product{"apple", basics.Green, basics.Small}
-	tree := basics.Product{"tree", basics.Green, basics.Large}
-	house := basics.Product{"house", basics.Blue, basics.Large}
+	apple := syntax_sugar.Product{"apple", syntax_sugar.Green, syntax_sugar.Small}
+	tree := syntax_sugar.Product{"tree", syntax_sugar.Green, syntax_sugar.Large}
+	house := syntax_sugar.Product{"house", syntax_sugar.Blue, syntax_sugar.Large}
 
-	products := []basics.Product{apple, tree, house}
+	products := []syntax_sugar.Product{apple, tree, house}
 
-	f := basics.Filter{}
+	f := syntax_sugar.Filter{}
 	expectedNames := []string{"apple", "tree"}
 
-	for i, p := range f.FilterByColor(products, basics.Green) {
+	for i, p := range f.FilterByColor(products, syntax_sugar.Green) {
 		assert.Equal(t, expectedNames[i], p.Name, "result incorrect...")
 	}
 
 	// specification
 	fmt.Println("use the new method")
 
-	bf := basics.BetterFilter{}
-	greenspec := basics.ColorSprcification{basics.Green}
+	bf := syntax_sugar.BetterFilter{}
+	greenspec := syntax_sugar.ColorSprcification{syntax_sugar.Green}
 
 	for i, p := range bf.Filter(products, greenspec) {
 		assert.Equal(t, expectedNames[i], p.Name, "result incorrect...")
 	}
 
-	largespec := basics.SizeSpecification{basics.Large}
+	largespec := syntax_sugar.SizeSpecification{syntax_sugar.Large}
 
 	expectedNames = []string{"tree", "house"}
 
@@ -71,7 +71,7 @@ func TestOpenClosed(t *testing.T) {
 		assert.Equal(t, expectedNames[i], p.Name, "result incorrect...")
 	}
 
-	largegreenspec := basics.AndSpecification{greenspec, largespec}
+	largegreenspec := syntax_sugar.AndSpecification{greenspec, largespec}
 	expectedNames = []string{"tree"}
 
 	for i, p := range bf.Filter(products, largegreenspec) {
@@ -80,7 +80,7 @@ func TestOpenClosed(t *testing.T) {
 }
 
 func TestSimpleResponse(t *testing.T) {
-	j := basics.Journal{}
+	j := syntax_sugar.Journal{}
 
 	j.AddEntry("hello")
 	j.AddEntry("world")
