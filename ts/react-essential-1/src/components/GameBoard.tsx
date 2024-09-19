@@ -1,31 +1,14 @@
-import { useState } from "react";
-import { GameTurn } from "../models/GameTurn";
-
 interface BoardProps {
     onSelectSquare: (rowIndex: number, colIndex: number) => void;
     // activePlayerSymbol: string;
-    turns: GameTurn[];
+    // turns: GameTurn[];
+    board: (string | null)[][];
 }
 
-const initialGameBoard: (string | null)[][] = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-];
-
-export default function GameBoard({ onSelectSquare, turns }: BoardProps): JSX.Element {
-    let gameBoard = initialGameBoard;
-
-    for (const turn of turns) {
-        const {square, player } = turn;
-        const {rowIndex, colIndex} = square;
-
-        gameBoard[rowIndex][colIndex] = player;
-    }
-    
+export default function GameBoard({ onSelectSquare, board }: BoardProps): JSX.Element {
     return (
         <ol id="game-board">
-            {gameBoard.map( (row: (string | null)[], rowIndex: number) => (
+            {board.map( (row: (string | null)[], rowIndex: number) => (
                 <li key={rowIndex}>
                     <ol>
                         {row.map( (playerSymbol: (string | null), colIndex: number) => (

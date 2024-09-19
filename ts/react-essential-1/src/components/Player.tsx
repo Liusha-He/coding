@@ -4,14 +4,18 @@ interface PlayerProps {
     initialName: string;
     symbol: string;
     isActive: boolean;
+    onChangeName: (symbol: string, newName: string) => void;
 }
 
-export default function Player({ initialName, symbol, isActive }: PlayerProps): JSX.Element {
+export default function Player({ initialName, symbol, isActive, onChangeName }: PlayerProps): JSX.Element {
     const [ playerName, setPlayerName ] = useState(initialName);
     const [ isEditing, setIsEditing ] = useState(false);
 
     function handleEdit() {
         setIsEditing((editing) => !editing );
+        if (isEditing) {
+            onChangeName(symbol, playerName);
+        };
     }
 
     function handleChange(event: React.FormEvent<HTMLInputElement>) {
