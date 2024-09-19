@@ -22,19 +22,7 @@ export default function GameBoard({ onSelectSquare, turns }: BoardProps): JSX.El
 
         gameBoard[rowIndex][colIndex] = player;
     }
-
-    // const [ gameBoard, setGameBoard ] = useState(initialGameBoard);
-
-    // function handleSelectSquare(rowIndex: number, colIndex: number) {
-    //     setGameBoard( (previousGameBoard: any[][]) => {
-    //         const updatedBoard = [...previousGameBoard.map(innerArray => [...innerArray])];
-    //         updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-    //         console.log(updatedBoard[rowIndex][colIndex]);
-    //         return updatedBoard;
-    //     });
-    //     onSelectSquare();
-    // }
-
+    
     return (
         <ol id="game-board">
             {gameBoard.map( (row: (string | null)[], rowIndex: number) => (
@@ -43,7 +31,10 @@ export default function GameBoard({ onSelectSquare, turns }: BoardProps): JSX.El
                         {row.map( (playerSymbol: (string | null), colIndex: number) => (
                             <li key={colIndex}>
                                 <button 
-                                onClick={() => onSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
+                                onClick={() => onSelectSquare(rowIndex, colIndex)}
+                                disabled={playerSymbol !== null}>
+                                    {playerSymbol}
+                                </button>
                             </li>
                         ) )}
                     </ol>
