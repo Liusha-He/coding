@@ -27,7 +27,7 @@ fun findPaths(grid: Matrix2D): Int {
     val gridPaths = MutableList(n) {MutableList(m) {0} }
 
     for (i in 0..<n) {
-        if (grid.get(i, 0) == 1) {
+        if (grid[i, 0] == 1) {
             gridPaths[i][0] = 1
         } else {
             break
@@ -35,7 +35,7 @@ fun findPaths(grid: Matrix2D): Int {
     }
 
     for (i in 0..<m) {
-        if (grid.get(0, i) == 1) {
+        if (grid[0, i] == 1) {
             gridPaths[0][i] = 1
         } else {
             break
@@ -44,7 +44,7 @@ fun findPaths(grid: Matrix2D): Int {
 
     for (i in 1..<n) {
         for (j in 1..<m) {
-            if (grid.get(i, j) == 0) {
+            if (grid[i, j] == 0) {
                 gridPaths[i][j] = 0
             } else {
                 gridPaths[i][j] = gridPaths[i-1][j] + gridPaths[i][j-1]
@@ -55,11 +55,22 @@ fun findPaths(grid: Matrix2D): Int {
 }
 
 fun main() {
-    val nrow = 3
-    val ncol = 3
+    val nrow = 4
+    val ncol = 4
 
-    val grid = Array(nrow) {row ->
-        IntArray(ncol) {col ->
+    val grid = Array(nrow) { _ ->
+        IntArray(ncol) { _ ->
+            val r = Random.nextDouble()
+
+            if (r < 0.1) {
+                0
+            } else {
+                1
+            }
+        }
+    }
+    val gridList = List(nrow) { _ ->
+        List(ncol) { _ ->
             val r = Random.nextDouble()
 
             if (r < 0.1) {
@@ -73,6 +84,9 @@ fun main() {
     grid[0][0] = 1
     grid[nrow - 1][ncol - 1] = 1
     grid.forEach { row -> println(row.toList()) }
-
     println(findPaths(Matrix2D.ArrayMatrix(grid)))
+
+    println("==========")
+    gridList.forEach { row -> println(row) }
+    println(findPaths(Matrix2D.ListMatrix(gridList)))
 }
