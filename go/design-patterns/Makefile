@@ -1,6 +1,8 @@
 SHELL := /bin/bash
 
+.SILENT:
+
 test:
-	GODOG_FEATURES=./features go test -timeout 30s -v -cover ./tests/...
+	go test -timeout 30s -v -cover ./tests/...
 
 .PHONY: test
