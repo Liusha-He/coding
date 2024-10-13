@@ -7,17 +7,16 @@ import (
 	"testing"
 
 	"bdd-poc/src/calc"
+
 	"github.com/cucumber/godog"
 )
 
-type godogsCtxKey struct{}
-
 func thereAreGodogs(ctx context.Context, available int) (context.Context, error) {
-	return context.WithValue(ctx, godogsCtxKey{}, available), nil
+	return context.WithValue(ctx, CtxKey{}, available), nil
 }
 
 func iEat(ctx context.Context, num int) (context.Context, error) {
-	available, ok := ctx.Value(godogsCtxKey{}).(int)
+	available, ok := ctx.Value(CtxKey{}).(int)
 	if !ok {
 		return ctx, errors.New("there are no godogs available")
 	}
@@ -26,11 +25,11 @@ func iEat(ctx context.Context, num int) (context.Context, error) {
 		return ctx, fmt.Errorf("you cannot eat %d godogs, there are %d available", num, available)
 	}
 
-	return context.WithValue(ctx, godogsCtxKey{}, calc.Eat(available, num)), nil
+	return context.WithValue(ctx, CtxKey{}, calc.Eat(available, num)), nil
 }
 
 func thereShouldBeRemaining(ctx context.Context, remaining int) error {
-	available, ok := ctx.Value(godogsCtxKey{}).(int)
+	available, ok := ctx.Value(CtxKey{}).(int)
 	if !ok {
 		return errors.New("there are no godogs available")
 	}
@@ -42,20 +41,17 @@ func thereShouldBeRemaining(ctx context.Context, remaining int) error {
 	return nil
 }
 
-func InitializeScenario(ctx *godog.ScenarioContext) {
+func InitializeEatScenario(ctx *godog.ScenarioContext) {
 	ctx.Given(`^there are (\d+) godogs$`, thereAreGodogs)
 	ctx.When(`^I eat (\d+)$`, iEat)
 	ctx.Then(`^there should be (\d+) remaining$`, thereShouldBeRemaining)
 }
 
-func TestFirstScenario(t *testing.T) {
+func TestEatScenario(t *testing.T) {
 	suite := godog.TestSuite{
-		ScenarioInitializer: InitializeScenario,
-		Options: &godog.Options{
-			Format:   "pretty",
-			Paths:    []string{"../../features"},
-			TestingT: t,
-		},
+		Name:                "eat godogs",
+		ScenarioInitializer: InitializeEatScenario,
+		Options:             &Options,
 	}
 
 	if suite.Run() != 0 {
