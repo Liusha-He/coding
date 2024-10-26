@@ -1,3 +1,6 @@
+.SILENT:
+.PHONY: init compile-dev compile-prod test
+
 init:
 	pip install maturin
 
