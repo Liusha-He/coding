@@ -2,3 +2,5 @@
 
 - Python + Rust
 - Go
+- TypeScript
+
