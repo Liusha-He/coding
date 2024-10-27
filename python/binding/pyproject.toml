@@ -3,10 +3,18 @@ requires = ["maturin>=1.7,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "find-prime"
-requires-python = ">=3.8"
+name = "rust-binding-poc"
+requires-python = ">=3.9"
 classifiers = [
+    "Operating System :: OS Independent",
     "Programming Language :: Rust",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -14,3 +22,16 @@ dynamic = ["version"]
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
+
+[tool.poetry]
+name = "rust-binding-poc"
+version = "0.1.0"
+description = "rust binding example"
+authors = []
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+behave = "^1.2.6"
