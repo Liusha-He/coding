@@ -2,7 +2,10 @@ from timeit import timeit
 import sys
 
 from prime_finder import find_nth_prime
-from libext_rs import find_nth_prime_rust, MyRustClass, demo_loops
+from libext_rs import (find_nth_prime_rust, 
+                       MyRustClass, 
+                       demo_loops,
+                       functional_iter)
 
 ITERATIONS = 100
 
@@ -41,6 +44,9 @@ def main():
     
     print("========== Syntax suger ==========")
     demo_loops()
+    
+    print("========== functional loop ==========")
+    functional_iter()
 
 
 if __name__ == "__main__":
