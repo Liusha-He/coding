@@ -1,6 +1,4 @@
 # Programming playground
 
-- Python
+- Python + Rust
 - Go
-- Rust
-

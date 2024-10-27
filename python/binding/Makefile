@@ -7,8 +7,11 @@ init:
 compile-dev:
 	maturin develop
 
-compile-prod:
+test: compile-dev
+	python -m main 100
+
+compile:
 	maturin develop --release
 
-test:
-	python -m main 1000
+run: 
+	python -m main 300

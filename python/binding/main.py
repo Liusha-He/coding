@@ -2,7 +2,10 @@ from timeit import timeit
 import sys
 
 from prime_finder import find_nth_prime
-from find_prime_rs.find_prime_rs import find_nth_prime_rust
+from libext_rs import (find_nth_prime_rust, 
+                       MyRustClass, 
+                       demo_loops,
+                       functional_iter)
 
 ITERATIONS = 100
 
@@ -33,6 +36,17 @@ def main():
         performance = (
             (rust_time_per_iter - python_time_per_iter) / python_time_per_iter) * 100
         print(f"\nPython code is faster than Rust by {performance:.2f}%\n")
+        
+    print("========== Rust binding class ==========")
+    rc = MyRustClass(100)
+    
+    print(rc.get_value())
+    
+    print("========== Syntax suger ==========")
+    demo_loops()
+    
+    print("========== functional loop ==========")
+    functional_iter()
 
 
 if __name__ == "__main__":
