@@ -7,11 +7,14 @@ init:
 compile-dev:
 	maturin develop
 
-test: compile-dev
-	python -m main 100
+test: 
+	pytest tests/ -svv --cov --cov-fail-under=90
 
 compile:
 	maturin develop --release
 
-run: 
-	python -m main 300
+lab:
+	jupyter lab
+
+# run: 
+# 	python -m main 300
