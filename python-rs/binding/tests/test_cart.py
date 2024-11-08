@@ -12,12 +12,12 @@ def cart():
 
 
 # scenario I
-@scenario('features/cart.feature', 'Add item to empty cart')
+@scenario("features/cart.feature", "Add item to empty cart")
 def test_add_item():
     pass
 
 
-@given('the cart is empty')
+@given("the cart is empty")
 def empty_cart():
     return ShoppingCart()
 
@@ -27,12 +27,13 @@ def add_item_to_cart(cart, item, price):
     cart.add_item(item, price)
 
 
-@then(parsers.parse('the cart should contain {count:d} item'))
+@then(parsers.parse("the cart should contain {count:d} item"))
 def check_cart_size(cart, count):
     assert cart.get_item_count() == count
 
+
 # scenario II
-@scenario('features/cart.feature', 'Remove item from cart')
+@scenario("features/cart.feature", "Remove item from cart")
 def test_remove_item():
     pass
 
@@ -49,11 +50,11 @@ def remove_item_from_cart(cart, item):
     cart.remove_item(item)
 
 
-@then('the cart should be empty')
+@then("the cart should be empty")
 def check_cart_empty(cart):
     assert cart.get_item_count() == 0
 
 
-@then(parsers.parse('the total should be {total:f}'))
+@then(parsers.parse("the total should be {total:f}"))
 def check_cart_total(cart, total):
     assert cart.get_total() == Decimal(str(total))
