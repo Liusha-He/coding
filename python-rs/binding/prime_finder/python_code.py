@@ -1,5 +1,5 @@
 def is_prime(num: int):
-    #Check if a number is prime.
+    # Check if a number is prime.
     if num < 2:
         return False
     for i in range(2, num):
@@ -9,7 +9,7 @@ def is_prime(num: int):
 
 
 def find_nth_prime(n: int):
-    #Find the nth prime number.
+    # Find the nth prime number.
     count = 0
     num = 1
     while count < n:
