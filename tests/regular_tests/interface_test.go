@@ -1,7 +1,7 @@
 package regulartests
 
 import (
-	"bdd-poc/src/calc"
+	"design-patterns/src/calc"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

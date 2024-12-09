@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	"bdd-poc/src/calc"
+	"design-patterns/src/calc"
 
 	"github.com/cucumber/godog"
 )
