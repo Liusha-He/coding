@@ -1,2 +1,0 @@
-Python Rust binding POC
------------------------
